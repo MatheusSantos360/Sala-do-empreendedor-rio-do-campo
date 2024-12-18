@@ -19,5 +19,5 @@ export const LogoText = () => (
 );
 
 export const LogoIcon = () => <div>
-  <Image src="/logo.png" alt="Logo sala do empreendedor" width={35} height={35} />
+  <Image className="h-auto w-auto" src="/logo.png" alt="Logo sala do empreendedor" width={35} height={35} />
 </div>

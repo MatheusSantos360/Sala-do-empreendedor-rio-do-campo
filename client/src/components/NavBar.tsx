@@ -11,15 +11,16 @@ export const NavBar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-base">
           <li>
-            <a href="/#about">
-              Sobre
-            </a>
+            <a href="/#about">Sobre</a>
           </li>
           <li>
             <a href="/#services">Serviços</a>
           </li>
           <li>
             <a href="/#materials">Materiais</a>
+          </li>
+          <li>
+            <a href="/#training-programs">Treinamentos</a>
           </li>
           <li className="flex items-center justify-center">
             <ThemeController />
