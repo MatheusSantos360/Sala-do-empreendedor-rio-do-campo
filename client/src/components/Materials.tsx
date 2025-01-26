@@ -13,7 +13,7 @@ export const Materials: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<ItemsProps | null>(items[0]);
 
   return (
-  <div id="materials  " className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden">
+  <div id="materials" className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden">
       {/* Title */}
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-primary">
         Materiais
