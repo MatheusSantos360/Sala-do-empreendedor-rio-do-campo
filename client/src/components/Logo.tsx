@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FC } from "react";
 
 export const LogoTextLink = ({ href }: { href?: string }) => (
   <a href={href} className="text-xl">
@@ -10,8 +11,8 @@ export const LogoTextLink = ({ href }: { href?: string }) => (
   </a>
 );
 
-export const LogoText = () => (
-  <div>
+export const LogoText: FC<{ className?: string }> = ({ className }) => (
+  <div className={className}>
     <span className="text-yellow-300 font-bold">Sala</span>
     <span className="text-yellow-300 font-normal"> do</span>
     <span className="text-blue-600"> empreendedor</span>
@@ -19,5 +20,5 @@ export const LogoText = () => (
 );
 
 export const LogoIcon = () => <div>
-  <Image className="h-auto w-auto mr-2" src="/logo.png" alt="Logo sala do empreendedor" width={35} height={35} />
+  <Image className="h-8 w-8 md:h-10 md:w-10" src="/logo.png" alt="Logo sala do empreendedor" width={35} height={35} />
 </div>

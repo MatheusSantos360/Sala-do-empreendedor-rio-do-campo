@@ -6,22 +6,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
 
-
 export const Materials: React.FC = () => {
   const items: ItemsProps[] = returnMaterials();
 
   const [selectedItem, setSelectedItem] = useState<ItemsProps | null>(items[0]);
 
   return (
-  <div id="materials" className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden">
+    <div id="materials" className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden">
       {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-primary">
-        Materiais
-      </h1>
+      <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-primary">Materiais</h1>
 
-      <div className="flex">
+      <div className="sm:flex">
         {/* Items list */}
-        <div className="w-1/3 border-r border-base-200 p-4">
+        <div className="w-screen sm:w-1/3 border-r border-base-200 p-4">
           {items.map((item) => (
             <motion.div
               key={item.id}
@@ -29,7 +26,7 @@ export const Materials: React.FC = () => {
               className={`
                 cursor-pointer 
                 p-4 
-                mb-2 
+                mb-2
                 rounded-lg 
                 transition-colors 
                 duration-300
@@ -52,7 +49,7 @@ export const Materials: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="w-2/3 p-8 flex flex-col justify-center"
+              className="sm:w-2/3 p-8 flex flex-col justify-center items-center w-screen"
             >
               <Card cards={selectedItem.cards} />
             </motion.div>

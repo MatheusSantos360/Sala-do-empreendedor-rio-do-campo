@@ -1,21 +1,12 @@
 "use client";
 
+import { Slide } from "@/types/Slide";
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 
-interface Slide {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-}
-
 interface SliderProps {
-  /** Tempo em ms entre transições automáticas. Opcional, padrão 5000ms */
   autoplayInterval?: number;
-  /** Altura do slider em pixels. Opcional, padrão 384px (h-96) */
   height?: string;
-  /** Largura máxima do slider. Opcional, padrão 4xl */
   maxWidth?: string;
 }
 

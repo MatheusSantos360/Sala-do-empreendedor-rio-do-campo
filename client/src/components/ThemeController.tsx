@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 export const ThemeController = () => {
   const [theme, setTheme] = useState("dark");
 
-  // Sincronizar o atributo data-theme com o estado do tema
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <label className="swap swap-rotate h-3 w-3 ml-4">
+    <label className="swap swap-rotate">
       {/* Este checkbox oculto controla o estado */}
       <input
         type="checkbox"
