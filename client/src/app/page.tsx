@@ -5,13 +5,15 @@ import { NavBar } from "@/components/NavBar";
 import { Services } from "@/components/Services";
 import { TrainingPrograms } from "@/components/TrainingPrograms";
 
-export default function Home() {
-  return <div>
-    <NavBar />
-    <Hero />
-    <About />
-    <Services />
-    <Materials />
-    <TrainingPrograms />
-  </div>
+export default async function Home() {
+  return (
+    <div>
+      <NavBar icons={true} />
+      <Hero />
+      <About />
+      <Services />
+      <Materials />
+      <TrainingPrograms />
+    </div>
+  );
 }
