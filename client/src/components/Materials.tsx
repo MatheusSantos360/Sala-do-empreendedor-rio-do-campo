@@ -1,28 +1,54 @@
 "use client";
 
-import { CardProps, ItemsProps } from "@/types/ItemsProps";
-import { returnMaterials } from "@/utils/returnMaterials";
+import { Category } from "@/types/Category";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import React, { useState } from "react";
+import { Card } from "./Card";
+import { useMaterials } from "@/utils/returnMaterials";
+import Loading from "@/app/loading";
+import { NewCategoryModal } from "./ModalButton";
+import { handleNewCategoryForm } from "@/utils/handleNewCategoryForm";
 
-export const Materials: React.FC = () => {
-  const items: ItemsProps[] = returnMaterials();
-
-  const [selectedItem, setSelectedItem] = useState<ItemsProps | null>(items[0]);
-
+export const Materials: React.FC<{ edit?: true }> = ({ edit }) => {
+  const [formData, setFormData] = useState<{ title: string }>({ title: "" });
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  
+  const { loading, categories } = useMaterials(setSelectedCategory);
+  
+  if (loading) return <Loading />;
+  
   return (
-    <div id="materials" className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden">
+    <div id="materials" className="w-full min-h-[500px] bg-base-100 rounded-xl shadow-lg overflow-hidden p-4 pt-6">
       {/* Title */}
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-primary">Materiais</h1>
+
+      {edit && (
+        <div className="flex justify-end px-4 gap-2">
+          <NewCategoryModal id="new-category" title="Nova Categoria">
+            <form onSubmit={handleNewCategoryForm}>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text">Título</span>
+                </div>
+                <input type="text" placeholder="Título aqui" className="input input-bordered w-full max-w-xs" required />
+                <div className="label">
+                </div>
+              </label>
+            </form>
+          </NewCategoryModal>
+          <NewCategoryModal id="new-card" title="Novo Card">
+            ...
+          </NewCategoryModal>
+        </div>
+      )}
 
       <div className="sm:flex">
         {/* Items list */}
         <div className="w-screen sm:w-1/3 border-r border-base-200 p-4">
-          {items.map((item) => (
+          {categories.map((category) => (
             <motion.div
-              key={item.id}
-              onClick={() => setSelectedItem(item)}
+              key={category._id}
+              onClick={() => setSelectedCategory(category)}
               className={`
                 cursor-pointer 
                 p-4 
@@ -30,59 +56,41 @@ export const Materials: React.FC = () => {
                 rounded-lg 
                 transition-colors 
                 duration-300
-                ${selectedItem?.id === item.id ? "bg-primary text-primary-content" : "hover:bg-base-200"}
+                ${selectedCategory?._id === category._id ? "bg-primary text-primary-content" : "hover:bg-base-200"}
               `}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <h3 className="font-bold">{item.title}</h3>
+              <h3 className={`font-bold flex ${edit ? "justify-between items-center" : ""}`}>
+                {category.title}
+
+                {edit && (
+                  <div className="mt-2">
+                    <button className="p-2 bg-transparent rounded-md hover:bg-base-100 duration-100 border-blue-500 border-[1px]">✏️</button>
+                    <button className="p-2 bg-transparent rounded-md hover:bg-base-100 duration-100 border-red-500 border-[1px]">🗑️</button>
+                  </div>
+                )}
+              </h3>
             </motion.div>
           ))}
         </div>
 
         {/* Items contents */}
         <AnimatePresence mode="wait">
-          {selectedItem && (
+          {selectedCategory && (
             <motion.div
-              key={selectedItem.id}
+              key={selectedCategory._id}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="sm:w-2/3 p-8 flex flex-col justify-center items-center w-screen"
             >
-              <Card cards={selectedItem.cards} />
+              <Card cards={selectedCategory.cards} edit={edit} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </div>
-  );
-};
-
-const Card: React.FC<{ cards: CardProps[] }> = ({ cards }) => {
-  return (
-    <div className="flex flex-wrap gap-4">
-      {cards.map((card, index) => (
-        <div key={index} className="card bg-base-100 w-[270px] shadow-xl hover:scale-105 duration-150">
-          <a href={card.href}>
-            <figure>
-              <Image src={card.image.url} width={270} height={270} alt={card.image.alt} />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                {card.title}
-                {card.badges?.map((badge, idx) => (
-                  <div key={idx} className="badge badge-primary">
-                    {badge}
-                  </div>
-                ))}
-              </h2>
-              <p>{card.description}</p>
-            </div>
-          </a>
-        </div>
-      ))}
     </div>
   );
 };
